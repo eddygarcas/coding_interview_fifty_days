@@ -16,7 +16,6 @@ func main() {
 	// but keep the order of the rest, the solution would be different
 	start := time.Now()
 	for index, elem := range elements {
-		fmt.Printf("index %v", index)
 		if elem == 0 {
 			for i := index; i < len(elements)-1; i++ {
 				elements[i] = elements[i+1]
@@ -24,7 +23,7 @@ func main() {
 			elements[len(elements)-1] = 0
 		}
 	}
-	fmt.Printf("Elements %v", elements)
+	fmt.Println("Elements: ", elements)
 	elapsed := time.Since(start)
 	fmt.Println("Result:", elements)
 	fmt.Printf("Execution time: %v\n", elapsed)
@@ -43,7 +42,7 @@ func main() {
 	for i := pos; i < len(elements); i++ {
 		elements[i] = 0
 	}
-	fmt.Printf("Elements %v", elements)
+	fmt.Println("Elements: ", elements)
 	elapsed = time.Since(start)
 	fmt.Println("Result:", elements)
 	fmt.Printf("Execution time: %v\n", elapsed)
