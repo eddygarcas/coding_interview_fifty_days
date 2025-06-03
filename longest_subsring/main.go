@@ -2,39 +2,29 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"time"
 )
 
 func main() {
-	elements := []string{"a", "b", "c", "b", "d", "a"}
-	l := 0
-	total := 1
-	leftp := 0
+
 	start := time.Now()
-	for r := 0; r <= len(elements)-1; r++ {
-		l = r - 1
-		fmt.Printf("Max substring: %d\n", total)
-		total = 1
-		for l >= leftp {
-			if elements[r] != elements[l] {
-				l--
-				total++
-			} else {
-				leftp = r - 1
-				break
-			}
+	e := []byte{'a', 'c', 'c', 'd', 'e'}
+	subsMap := make(map[byte]int, len(e))
+
+	ans := 0
+	left := 0
+	right := 0
+	for i := 0; i < len(e); i++ {
+		if val, ok := subsMap[e[i]]; ok {
+			left = int(math.Max(float64(left), float64(val+1)))
 		}
-
+		right++
+		subsMap[e[i]] = i
+		ans = int(math.Max(float64(right-left), float64(ans)))
 	}
+	fmt.Printf("Max substring: %d\n", ans)
 	elapsed := time.Since(start)
-	fmt.Printf("Execution time: %v\n", elapsed)
-	fmt.Printf("Max substring: %d\n", total)
-
-	//subsMap := make(map[string]bool, len(elements))
-
-	start = time.Now()
-	//...
-	elapsed = time.Since(start)
 	fmt.Printf("Execution time: %v\n", elapsed)
 
 }
