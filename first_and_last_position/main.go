@@ -18,6 +18,8 @@ func main() {
 	target := 18
 	result := point{x: -1, y: -1}
 
+	// Another solution would be once you've found the first one, iterate backwards, because in case of a very large
+	// array doing it linearly may take long time.
 	start := time.Now()
 	for index, element := range e {
 		if element == target {
