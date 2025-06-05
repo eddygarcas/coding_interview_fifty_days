@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 /*
 You have N versions of a software, we want to find the first "bad" version of the software
@@ -20,6 +23,7 @@ func main() {
 	r := len(e)
 	l := 0
 
+	start := time.Now()
 	for l < r {
 		if isBadVersion(e[mid]) {
 			r = mid
@@ -29,6 +33,8 @@ func main() {
 		mid = (r + l) / 2
 	}
 	fmt.Println(e[mid])
+	elapsed := time.Since(start)
+	fmt.Printf("Execution time: %v\n", elapsed)
 
 }
 

@@ -1,0 +1,54 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+	"time"
+)
+
+/*
+*
+Missing Number problem
+Given an array containing n distinct numbers taken from 0,1,2,3,...,n.
+find the number that is missing from the array.
+*/
+func main() {
+	// input example [5,3,2,4,0]
+	// Sort it [0,2,3,4,5] = position: 5 == 5 && position: 0 == 0
+	// left and right
+	input := []int{5, 3, 2, 4, 0, 6, 1, 8, 9}
+	missing := -1
+
+	l := 0
+	r := len(input)
+	start := time.Now()
+	sort.Ints(input)
+	for l < r {
+		if l != input[l] {
+			missing = l
+			break
+		} else if r != input[r-1] {
+			missing = r
+			break
+		} else {
+			l++
+			r--
+		}
+	}
+	elapsed := time.Since(start)
+	fmt.Printf("Execution time: %v\n", elapsed)
+	fmt.Printf("The missing number is %d\n", missing)
+
+	currentSum := 0
+	input = []int{5, 3, 2, 4, 0, 6, 1, 8, 9}
+	// Approach using Gauss
+	start = time.Now()
+	for _, num := range input {
+		currentSum += num // 38
+	}
+	n := len(input) // 9
+	intendedSum := n * (n + 1) / 2
+	elapsed = time.Since(start)
+	fmt.Printf("Execution time: %v\n", elapsed)
+	fmt.Printf("The missing number is %d\n", intendedSum-currentSum)
+}
