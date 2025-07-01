@@ -1,5 +1,8 @@
 package main
 
+// This program finds the element that appears only once in an array where every other element appears twice.
+// It uses the XOR bitwise operation to achieve this in linear time and constant space.
+
 import (
 	"fmt"
 	"time"
@@ -15,9 +18,9 @@ func main() {
 	fmt.Printf("The single number is: %d\n", singleNumber)
 	elapsed := time.Since(start)
 	fmt.Printf("Execution time: %v\n", elapsed)
-
 }
 
+// findSingleNumber returns the element that appears only once using XOR.
 func findSingleNumber(input []int) int {
 	final := 0
 	for _, val := range input {

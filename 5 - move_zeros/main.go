@@ -1,11 +1,16 @@
 package main
 
+// This program demonstrates two methods to move all zeros in an array to the end while maintaining the order of non-zero elements.
+// The first method shifts zeros one by one, which is less efficient.
+// The second method uses a two-pass approach for better performance.
+
 import (
 	"fmt"
 	"time"
 )
 
 func main() {
+	// Initial array with zeros and non-zeros
 	elements := []int{6, 1, 0, 3, 0, 1, 0, 12}
 	// Go through the array
 	// If you find a 0 place it directly at the end of the array
@@ -28,17 +33,19 @@ func main() {
 	fmt.Println("Result:", elements)
 	fmt.Printf("Execution time: %v\n", elapsed)
 
+	// Reset the array for the next method
 	elements = []int{6, 1, 0, 3, 0, 1, 0, 12}
 
+	// Method 2: Efficiently move non-zeros forward, then fill the rest with zeros
 	start = time.Now()
-
-	pos := 0
+	pos := 0 // Position to place the next non-zero element
 	for _, elem := range elements {
 		if elem != 0 {
 			elements[pos] = elem
 			pos++
 		}
 	}
+	// Fill the remaining positions with zeros
 	for i := pos; i < len(elements); i++ {
 		elements[i] = 0
 	}

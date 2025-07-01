@@ -19,10 +19,11 @@ func main() {
 	input := []int{5, 3, 2, 4, 0, 6, 1, 8, 9}
 	missing := -1
 
-	l := 0
-	r := len(input)
+	l := 0          // Left pointer for checking positions
+	r := len(input) // Right pointer for checking positions
 	start := time.Now()
-	sort.Ints(input)
+	sort.Ints(input) // Sort the array for position checking
+	// Check from both ends for the missing number
 	for l < r {
 		if l != input[l] {
 			missing = l
@@ -39,15 +40,16 @@ func main() {
 	fmt.Printf("Execution time: %v\n", elapsed)
 	fmt.Printf("The missing number is %d\n", missing)
 
+	// Alternative approach using Gauss' formula
 	currentSum := 0
 	input = []int{5, 3, 2, 4, 0, 6, 1, 8, 9}
 	// Approach using Gauss
 	start = time.Now()
 	for _, num := range input {
-		currentSum += num // 38
+		currentSum += num // Sum all elements in the array
 	}
-	n := len(input) // 9
-	intendedSum := n * (n + 1) / 2
+	n := len(input)                // Number of elements in the array
+	intendedSum := n * (n + 1) / 2 // Expected sum from 0 to n
 	elapsed = time.Since(start)
 	fmt.Printf("Execution time: %v\n", elapsed)
 	fmt.Printf("The missing number is %d\n", intendedSum-currentSum)
