@@ -41,6 +41,13 @@ func main() {
 	fmt.Printf("The missing number is %d\n", missing)
 
 	// Alternative approach using Gauss' formula
+	// Gauss' formula allows you to quickly calculate the sum of the first n natural numbers:
+	//     sum = n * (n + 1) / 2.
+	// Pre-conditions for using Gauss' formula in the missing number problem:
+	//   1. The sequence must contain all integers from 0 to n, with exactly one number missing.
+	//   2. There should be no duplicates or extra numbers outside the range 0 to n.
+	// This can be used to find a missing number in a sequence from 0 to n by comparing the
+	// expected sum to the actual sum.
 	currentSum := 0
 	input = []int{5, 3, 2, 4, 0, 6, 1, 8, 9}
 	// Approach using Gauss
