@@ -50,6 +50,17 @@ func main() {
 }
 
 // findFirst returns the index of the first occurrence of target in e using binary search.
+// Step-by-step explanation:
+//  1. Initialize two pointers: left at the start (0) and right at the end (len(e)-1) of the array.
+//  2. While the search range is valid (right >= left):
+//     a. Compute mid as the middle index between left and right.
+//     b. If e[mid] == target:
+//     - Check if mid is the first occurrence:
+//     * If mid == 0 (start of array), or the previous element e[mid-1] != target, then mid is the first occurrence, so return mid.
+//     * Otherwise, move the search to the left half (right = mid - 1) to find an earlier occurrence.
+//     c. If e[mid] > target, move the search to the left half (right = mid - 1).
+//     d. If e[mid] < target, move the search to the right half (left = mid + 1).
+//  3. If the loop ends without finding the target, return -1.
 func findFirst(e []int, target int) int {
 	left, right := 0, len(e)-1
 	for right >= left {
