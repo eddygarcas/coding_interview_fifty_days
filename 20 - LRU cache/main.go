@@ -9,8 +9,9 @@ import (
 // LRUCache represents a Least Recently Used cache with a fixed capacity.
 // It stores key-value pairs and evicts the least recently used entry when full.
 type LRUCache struct {
-	capacity int           // Maximum number of entries the cache can hold
-	cache    map[int]entry // Map from key to cache entry
+	capacity int         // Maximum number of entries the cache can hold
+	cache    map[int]int // Map from key to cache entry
+	order    []int
 }
 
 // entry represents a value stored in the LRUCache, along with its usage index.
@@ -23,37 +24,30 @@ type entry struct {
 func NewLRUCache(capacity int) *LRUCache {
 	return &LRUCache{
 		capacity: capacity,
-		cache:    make(map[int]entry, capacity),
+		cache:    make(map[int]int, capacity),
+		order:    make([]int, 0, capacity),
 	}
 }
 
 // Put inserts or updates a key-value pair in the cache.
 // It marks the entry as most recently used (index 0),
 // increments the index of all other entries, and evicts the least recently used if needed.
-func (c LRUCache) Put(key int, value int) {
-	// First look if exist
-	// if so add as index 0 and increment the rest index
-	// If doens't exist
-	for k, e := range c.cache {
-		if e.index == c.capacity {
-			delete(c.cache, k)
-		} else {
-			if len(c.cache) == c.capacity {
-				e.index += 1
-				c.cache[k] = e
-			}
-		}
+func (c *LRUCache) Put(key int, value int) {
+	// move all order index one right until reach capacity
+	for r := len(c.order); r > 1; r-- {
+		c.order[r] = c.order[r-1]
 	}
-
-	c.cache[key] = entry{value, 0}
+	c.order[0] = key
+	// order 0 should contain key
+	c.cache[key] = value
 }
 
 // Get retrieves the value for a given key and marks it as most recently used.
 // Returns (value, true) if found; (0, false) otherwise.
-func (c LRUCache) Get(key int) (value int, ok bool) {
+func (c *LRUCache) Get(key int) (value int, ok bool) {
 	if e, ok := c.cache[key]; ok {
-		c.Put(key, e.value)
-		return e.value, ok
+		c.Put(key, e)
+		return e, ok
 	}
 	return 0, false
 }
