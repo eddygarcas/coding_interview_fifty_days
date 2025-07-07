@@ -31,14 +31,20 @@ func NewLRUCache(capacity int) *LRUCache {
 // It marks the entry as most recently used (index 0),
 // increments the index of all other entries, and evicts the least recently used if needed.
 func (c LRUCache) Put(key int, value int) {
+	// First look if exist
+	// if so add as index 0 and increment the rest index
+	// If doens't exist
 	for k, e := range c.cache {
-		if e.index < c.capacity {
-			e.index++
-			c.cache[k] = e
-		} else {
+		if e.index == c.capacity {
 			delete(c.cache, k)
+		} else {
+			if len(c.cache) == c.capacity {
+				e.index += 1
+				c.cache[k] = e
+			}
 		}
 	}
+
 	c.cache[key] = entry{value, 0}
 }
 
@@ -67,6 +73,14 @@ func main() {
 	cache.Put(3, 3000)
 	fmt.Printf("LRU Cache: %v\n", cache)
 
+	cache.Put(4, 400)
+	fmt.Printf("LRU Cache: %v\n", cache)
+	cache.Put(4, 400)
+	fmt.Printf("LRU Cache: %v\n", cache)
+	cache.Put(4, 400)
+	fmt.Printf("LRU Cache: %v\n", cache)
+	cache.Put(4, 400)
+	fmt.Printf("LRU Cache: %v\n", cache)
 	cache.Put(4, 400)
 	fmt.Printf("LRU Cache: %v\n", cache)
 
