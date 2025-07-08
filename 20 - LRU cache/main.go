@@ -35,7 +35,7 @@ func NewLRUCache(capacity int) *LRUCache {
 	return &LRUCache{
 		capacity: capacity,
 		cache:    list.New(),
-		items:    make(map[int]*list.Element, capacity),
+		items:    make(map[int]*list.Element, capacity), // Define map capacity, this wil avoid rehash and improve performance
 	}
 }
 
