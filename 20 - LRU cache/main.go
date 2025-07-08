@@ -48,7 +48,7 @@ func NewLRUCache(capacity int) *LRUCache {
 //   - value: The value to associate with the key
 //
 // Time Complexity: O(1)
-func (c LRUCache) Put(key int, value int) {
+func (c LRUCache) Put(key, value int) {
 	// If key exists, update its value and move it to front (most recently used)
 	if val, ok := c.items[key]; ok {
 		c.cache.MoveToFront(val)
