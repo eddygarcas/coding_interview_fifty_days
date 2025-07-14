@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // ListNode defines a node in a singly linked list.
 // Each node contains an integer value and a pointer to the next node.
@@ -28,14 +31,16 @@ func main() {
 
 	// Remove the 2nd node from the end (should remove node 5)
 	// Calls the method on the head node
+	start := time.Now()
 	result := node1
 	node1.removeNthNode(2)
-
+	elapsed := time.Since(start)
 	// Print the modified list
 	for result != nil {
 		fmt.Printf("%d,", result.Val)
 		result = result.Next
 	}
+	fmt.Printf("\nTime elapsed: %s\n", elapsed)
 }
 
 // removeNthNode removes the nth node from the end of the singly linked list.
