@@ -2,10 +2,10 @@ package main
 
 import "fmt"
 
-// ListNode defines a node in a singly linked list.
+// ListNode represents a node in a singly linked list.
 type ListNode struct {
-	Val  int       // Value held by the node
-	Next *ListNode // Pointer to the next node in the list
+	Val  int       // Value stored in the node
+	Next *ListNode // Pointer to the next node
 }
 
 func main() {
@@ -23,7 +23,6 @@ func main() {
 	node4.Next = node5
 	node5.Next = nil
 
-	// Apply the oddEvenList operation to rearrange the nodes
 	result := node1
 	node1.oddEvenList()
 	for result != nil {
@@ -32,20 +31,21 @@ func main() {
 	}
 }
 
-// oddEvenList rearranges nodes in the list so that all odd-indexed nodes
-// are grouped together followed by the even-indexed nodes. The first node is considered odd.
-// The operation is performed in-place.
+// oddEvenList rearranges the list so that all odd-indexed nodes are grouped together
+// followed by all even-indexed nodes. The operation is performed in-place.
+// Example: 1->2->3->4->5 becomes 1->3->5->2->4
 func (t *ListNode) oddEvenList() {
-	odd := t             // Pointer to the current odd node
-	even := odd.Next     // Pointer to the current even node
-	evenList := odd.Next // Head of the even node sublist
+	odds := t          // Pointer to the current odd node
+	evens := odds.Next // Pointer to the current even node
+	eventList := evens // Store the start of the even node sublist
 
 	// Traverse and rearrange the list
-	for even != nil && evenList.Next != nil {
-		odd.Next = even.Next // Link current odd node to the next odd node
-		odd = odd.Next       // Move odd pointer forward
-		even.Next = odd.Next // Link current even node to the next even node
-		even = even.Next     // Move even pointer forward
+	for evens != nil && evens.Next != nil {
+		odds.Next = evens.Next // Link odd node to the next odd node
+		odds = odds.Next       // Move odd pointer forward
+
+		evens.Next = odds.Next // Link even node to the next even node
+		evens = evens.Next     // Move even pointer forward
 	}
-	odd.Next = evenList // Attach even sublist after odd sublist
+	odds.Next = eventList // Attach even sublist after odd sublist
 }
