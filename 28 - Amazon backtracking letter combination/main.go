@@ -70,12 +70,11 @@ func (s *PhoneText) letterCombination(digits func() []int, cur string, digitInde
 		return // End this recursion branch.
 	}
 	// Get the current digit to process based on the current index.
-	currentDigit := int(digits()[digitIndex])
-	// Look up the possible letters for the current digit.
-	currentString := s.digitToString[currentDigit]
+	currentDigit := digits()[digitIndex]
 
+	// Look up the possible letters for the current digit.
 	// Iterate over each possible letter for the current digit.
-	for _, char := range currentString {
+	for _, char := range s.digitToString[currentDigit] {
 		// Recursively build the next combination by adding the current letter and moving to the next digit.
 		next := cur + string(char)
 		if isRoot && digitIndex == 0 {
