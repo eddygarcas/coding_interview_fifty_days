@@ -1,6 +1,7 @@
 package main
 
-// This program demonstrates two methods to move all zeros in an array to the end while maintaining the order of non-zero elements.
+// This program demonstrates two methods to move all zeros in an array
+// to the end while maintaining the order of non-zero elements.
 // The first method shifts zeros one by one, which is less efficient.
 // The second method uses a two-pass approach for better performance.
 

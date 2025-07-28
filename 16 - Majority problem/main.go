@@ -5,16 +5,25 @@ import (
 	"time"
 )
 
+// This program finds the majority element in an array using two approaches:
+// 1. A hashmap-based counting method
+// 2. The Boyer-Moore voting algorithm
+//
+// A majority element is defined as an element that appears more than n/2 times
+// in the array, where n is the array length.
+
 func main() {
-	// Example input array
+	// Example input array containing a majority element (3)
 	nums := []int{2, 1, 3, 1, 1, 3, 3, 3, 3}
-	// Call majorityElement to find the majority element in the array
+
+	// Test hashmap-based approach
 	start := time.Now()
 	result := majorityElement(nums)
 	fmt.Printf("result: %v\n", result)
 	elapsed := time.Since(start)
 	fmt.Printf("Execution time: %v\n", elapsed)
 
+	// Test Boyer-Moore approach
 	start = time.Now()
 	result = majorityBoyer(nums)
 	fmt.Printf("result: %v\n", result)
@@ -23,6 +32,8 @@ func main() {
 }
 
 // majorityElement finds the element that appears more than n/2 times in the nums slice.
+// It uses a hashmap to count occurrences of each element.
+// Time complexity: O(n), Space complexity: O(n)
 // Returns the majority element if it exists, otherwise returns 0.
 func majorityElement(nums []int) int {
 	// Map to store the count of each element
@@ -43,9 +54,19 @@ func majorityElement(nums []int) int {
 	return 0
 }
 
-// Here will implement the Boyer-Moore majority vote algorithm
-// This algorithm only works if you are guaranteed tho have one element that occurs more than n/2 time
-// in this case [1,1,2,2,3] this algorithm won't work.
+// majorityBoyer implements the Boyer-Moore voting algorithm to find the majority element.
+// The algorithm works by maintaining a candidate and a count:
+// 1. Initialize candidate as first element and count as 1
+// 2. For each subsequent element:
+//   - If count becomes 0, pick current element as new candidate
+//   - If element matches candidate, increment count
+//   - If element differs from candidate, decrement count
+//
+// 3. Final candidate is the majority element
+//
+// Time complexity: O(n), Space complexity: O(1)
+// Note: This algorithm only works when a majority element is guaranteed to exist.
+// For arrays like [1,1,2,2,3], it may give incorrect results.
 func majorityBoyer(nums []int) int {
 	count := 1
 	candidate := nums[0]
