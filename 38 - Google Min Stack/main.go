@@ -51,6 +51,8 @@ func (s *stack[T]) top() []T {
 
 // getMin finds the minimum element in the stack while preserving stack order.
 // Uses an auxiliary stack to maintain original order.
+// This method is deprecated as it increase the time complexity as it's not a linear approach
+// @deprecated
 func (s *stack[T]) getMin() T {
 	aux := stack[T]{}
 	var minElem T
