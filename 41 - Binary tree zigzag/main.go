@@ -41,6 +41,28 @@ func main() {
 
 // levelOrderZigZag performs a modified BFS traversal of the binary tree
 // where alternate levels are reversed to create a zigzag pattern
+// Example of queue states during zigzag traversal:
+//
+// Initial state:
+// queue: [3]
+// result: []
+//
+// Level 1 (left->right):
+// queue: [9,20]       // Children of 3
+// result: [[3]]
+//
+// Level 2 (right->left):
+// queue: [15,7]       // Children of 20 and 9
+// result: [[3],[20,9]]
+//
+// Level 3 (left->right):
+// queue: []           // No more children
+// result: [[3],[20,9],[15,7]]
+//
+// Final result captures zigzag pattern:
+// Level 1: [3]      (left->right)
+// Level 2: [20,9]   (right->left)
+// Level 3: [15,7]   (left->right)
 // Time: O(n) where n is number of nodes
 // Space: O(w) where w is maximum width of tree
 func levelOrderZigZag(root *TreeNode) [][]int {
