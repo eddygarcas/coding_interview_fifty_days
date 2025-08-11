@@ -24,6 +24,11 @@ type TreeNode struct {
 }
 
 func main() {
+	//        3
+	//      /   \
+	//     9     20
+	//          /  \
+	//         15   25
 	root := &TreeNode{val: 3}
 	root.left = &TreeNode{val: 9}
 	root.right = &TreeNode{val: 20}
@@ -37,6 +42,24 @@ func main() {
 	fmt.Printf("elapsed %s\n", elapsed)
 }
 
+// levelOrder performs a Breadth-First Search (BFS) traversal of the binary tree
+// It uses a queue to visit nodes level by level, from left to right:
+// 1. Start with root node in queue
+// 2. For each level:
+//   - Get current level size
+//   - Process all nodes in current level
+//   - Add their children to queue for next level
+//
+// 3. Return array of arrays where each inner array represents one level
+// Time: O(n) where n is number of nodes
+// Space: O(w) where w is maximum width of tree
+//        3     Level 0: [3]
+//      /   \
+//     9     20  Level 1: [9,20]
+//          /  \
+//         15   25 Level 2: [15,25]
+
+// After BFS traversal, result will be: [[3], [9,20], [15,25]]
 func levelOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return nil
@@ -47,7 +70,7 @@ func levelOrder(root *TreeNode) [][]int {
 
 	for len(queue) > 0 {
 		size := len(queue)
-		level := make([]int, size)
+		level := make([]int, 0)
 		for i := 0; i < size; i++ {
 			node := queue[0]
 			queue = queue[1:]
