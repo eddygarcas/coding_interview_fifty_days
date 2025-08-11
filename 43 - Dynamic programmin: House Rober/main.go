@@ -87,11 +87,17 @@ func (h *Prospects) RobHouseFromBottom() int {
 	if total == 1 {
 		return h.houses[0]
 	}
+	// For houses: [1, 5, 3, 0, 9, 4, 1, 15]
+	firstHouse := h.houses[0]                   // first = 1
+	secondHouse := max(firstHouse, h.houses[1]) // second = max(1,5) = 5
+	result := secondHouse                       // result = 5
 
-	firstHouse := h.houses[0]
-	secondHouse := max(firstHouse, h.houses[1])
-	result := secondHouse
-
+	// i=2: house=3  -> result=max(5, 3+1=4)    -> first=5, second=5
+	// i=3: house=0  -> result=max(5, 0+5=5)    -> first=5, second=5
+	// i=4: house=9  -> result=max(5, 9+5=14)   -> first=5, second=14
+	// i=5: house=4  -> result=max(14, 4+5=9)   -> first=14, second=14
+	// i=6: house=1  -> result=max(14, 1+14=15) -> first=14, second=15
+	// i=7: house=15 -> result=max(15, 15+14=29)-> first=15, second=29
 	for i := 2; i < total; i++ {
 		result = max(secondHouse, h.houses[i]+firstHouse)
 		firstHouse = secondHouse
