@@ -24,17 +24,23 @@ type Prospects struct {
 }
 
 func main() {
-	prospects := Prospects{houses: []int{1, 5, 3, 0, 9, 4}}
+	prospects := Prospects{houses: []int{1, 5, 3, 0, 9, 4, 1, 15}}
 	route := make([]int, len(prospects.houses))
 
 	start := time.Now()
-	result := prospects.RobHouseFromBottom(len(prospects.houses)-1, route)
+	result := prospects.RobHouseFromTop(len(prospects.houses)-1, route)
 	fmt.Printf("result %d\n", result)
 	elapsed := time.Since(start)
-	fmt.Printf("elapsed %s\n", elapsed)
+	fmt.Printf("Time elapsed from the top %s\n", elapsed)
+
+	start = time.Now()
+	result = prospects.RobHouseFromBottom()
+	fmt.Printf("result %d\n", result)
+	elapsed = time.Since(start)
+	fmt.Printf("Time elapsed from the bottom %s\n", elapsed)
 }
 
-// RobHouseFromBottom calculates the maximum money that can be robbed from houses up to given address
+// RobHouseFromTop calculates the maximum money that can be robbed from houses up to given address
 // using dynamic programming with memoization.
 // Parameters:
 //   - address: current house index being considered
@@ -48,7 +54,7 @@ func main() {
 //   - Excluding current house and taking max money from house (address-1)
 //
 // 4. Caches and returns result
-func (h *Prospects) RobHouseFromBottom(address int, route []int) int {
+func (h *Prospects) RobHouseFromTop(address int, route []int) int {
 	if route[address] > 0 {
 		return route[address]
 	}
@@ -61,8 +67,35 @@ func (h *Prospects) RobHouseFromBottom(address int, route []int) int {
 	if address == 1 {
 		return max(h.houses[0], h.houses[1])
 	}
-	iStoleHouse := h.houses[address] + h.RobHouseFromBottom(address-2, route)
-	iNotStoleHouse := h.RobHouseFromBottom(address-1, route)
+	iStoleHouse := h.houses[address] + h.RobHouseFromTop(address-2, route)
+	iNotStoleHouse := h.RobHouseFromTop(address-1, route)
 	route[address] = max(iStoleHouse, iNotStoleHouse)
 	return route[address]
+}
+
+// RobHouseFromBottom calculates maximum money that can be robbed using bottom-up dynamic programming.
+// It iteratively builds the solution by:
+// 1. Handling base cases for 1-2 houses
+// 2. For each house i, choosing maximum between:
+//   - Previous max (not robbing current house)
+//   - Current house value + max money from i-2 houses
+//
+// Parameters: none
+// Returns: Maximum money that can be robbed
+func (h *Prospects) RobHouseFromBottom() int {
+	total := len(h.houses)
+	if total == 1 {
+		return h.houses[0]
+	}
+
+	firstHouse := h.houses[0]
+	secondHouse := max(firstHouse, h.houses[1])
+	result := secondHouse
+
+	for i := 2; i < total; i++ {
+		result = max(secondHouse, h.houses[i]+firstHouse)
+		firstHouse = secondHouse
+		secondHouse = result
+	}
+	return result
 }
