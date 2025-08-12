@@ -20,6 +20,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"time"
 )
 
@@ -45,9 +46,16 @@ func main() {
 		fmt.Printf("error: %v\n", err)
 	} else {
 		fmt.Printf("Best buy price: %d, Best sell price: %d\n", stocks.prices[stocks.lowerIndex], stocks.prices[stocks.upperIndex])
+		fmt.Printf("Buy day: %d, Sell day: %d\n", stocks.lowerIndex, stocks.upperIndex)
 		fmt.Printf("Maximum profit: %d\n", profit)
 	}
 	fmt.Printf("Time elapsed: %s\n", time.Since(start))
+
+	start = time.Now()
+	profit = stocks.bestProfitSellingPriceNoDays()
+	fmt.Printf("Best profit %d\n", profit)
+	elapsed := time.Since(start)
+	fmt.Printf("Time elapsed: %s\n", elapsed)
 }
 
 // bestSellingPrice recursively finds the optimal buying and selling prices to maximize profit.
@@ -95,4 +103,21 @@ func (s *Stocks) bestSellingPrice(minPrice, maxProfit, i int) (int, int, error) 
 	}
 
 	return s.bestSellingPrice(minPrice, maxProfit, i+1)
+}
+
+// bestProfitSellingPriceNoDays calculates maximum profit possible by buying and selling once.
+// This simplified version only returns the profit amount without tracking buy/sell days.
+// Uses a single pass through prices to track minimum price seen and maximum profit possible.
+// Returns: Maximum profit achievable (may be 0 if no profit possible)
+func (s *Stocks) bestProfitSellingPriceNoDays() int {
+	buyPrice := math.MaxInt32
+	profit := 0
+	for _, price := range s.prices {
+		if price < buyPrice {
+			buyPrice = price
+		} else {
+			profit = int(math.Max(float64(profit), float64(price-buyPrice)))
+		}
+	}
+	return profit
 }
