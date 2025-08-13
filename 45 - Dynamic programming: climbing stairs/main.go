@@ -29,7 +29,7 @@ import (
 // - Take 2 steps from n-2
 
 func main() {
-	n := 10
+	n := 40
 	start := time.Now()
 	result := numWaysTop(n)
 	elapsed := time.Since(start)
@@ -83,6 +83,9 @@ func numWaysTop(steps int) int {
 // Time Complexity: O(n) where n is number of steps
 // Space Complexity: O(n) for dynamic programming array
 func numWaysBottom(steps int) int {
+	if steps == 1 {
+		return 1
+	}
 	ans := make([]int, steps+1)
 	ans[1] = 1
 	ans[2] = 2
