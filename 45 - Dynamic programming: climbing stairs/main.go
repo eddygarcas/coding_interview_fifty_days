@@ -62,7 +62,6 @@ func main() {
 // Time Complexity: O(2^n) due to recursive branching
 // Space Complexity: O(n) due to recursion stack depth
 func numWaysTop(steps int) int {
-
 	if steps == 0 {
 		return 1
 	}
@@ -85,9 +84,9 @@ func numWaysTop(steps int) int {
 // Space Complexity: O(n) for dynamic programming array
 func numWaysBottom(steps int) int {
 	ans := make([]int, steps+1)
-	ans[0] = 1
 	ans[1] = 1
-	for i := 2; i <= steps; i++ {
+	ans[2] = 2
+	for i := 3; i <= steps; i++ {
 		ans[i] = ans[i-1] + ans[i-2]
 	}
 	return ans[steps]
