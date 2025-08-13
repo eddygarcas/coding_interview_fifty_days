@@ -62,18 +62,35 @@ func main() {
 // Time Complexity: O(2^n) due to recursive branching
 // Space Complexity: O(n) due to recursion stack depth
 func numWaysTop(steps int) int {
-	if steps < 0 {
-		return 0
-	}
+
 	if steps == 0 {
 		return 1
 	}
-	twoSteps := steps - 2
-	oneSteps := steps - 1
-	if (twoSteps + oneSteps) == 0 {
+	if (steps - 2 + steps - 1) <= 0 {
 		return 1
 	}
-	return numWaysTop(oneSteps) + numWaysTop(twoSteps)
+	return numWaysTop(steps-1) + numWaysTop(steps-2)
+}
+
+// numWaysBottom calculates number of ways using bottom-up dynamic programming
+// Builds solution iteratively by storing results in array:
+// dp[i] = dp[i-1] + dp[i-2]
+//
+// Parameters:
+//   - steps: total number of steps to climb
+//
+// Returns: number of distinct ways to climb the stairs
+//
+// Time Complexity: O(n) where n is number of steps
+// Space Complexity: O(n) for dynamic programming array
+func numWaysBottom(steps int) int {
+	ans := make([]int, steps+1)
+	ans[0] = 1
+	ans[1] = 1
+	for i := 2; i <= steps; i++ {
+		ans[i] = ans[i-1] + ans[i-2]
+	}
+	return ans[steps]
 }
 
 // numWaysOptimization calculates number of ways using optimized bottom-up approach
@@ -96,25 +113,4 @@ func numWaysOptimization(steps int) int {
 		twoSteps = current
 	}
 	return twoSteps
-}
-
-// numWaysBottom calculates number of ways using bottom-up dynamic programming
-// Builds solution iteratively by storing results in array:
-// dp[i] = dp[i-1] + dp[i-2]
-//
-// Parameters:
-//   - steps: total number of steps to climb
-//
-// Returns: number of distinct ways to climb the stairs
-//
-// Time Complexity: O(n) where n is number of steps
-// Space Complexity: O(n) for dynamic programming array
-func numWaysBottom(steps int) int {
-	ans := make([]int, steps+1)
-	ans[0] = 1
-	ans[1] = 1
-	for i := 2; i <= steps; i++ {
-		ans[i] = ans[i-1] + ans[i-2]
-	}
-	return ans[steps]
 }
