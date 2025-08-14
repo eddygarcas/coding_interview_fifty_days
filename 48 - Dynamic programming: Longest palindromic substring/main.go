@@ -15,6 +15,19 @@ import (
 // 2. Fill DP table bottom-up, checking all possible substring lengths
 // 3. Track longest palindrome found so far
 //
+// For input "baba", the isPalindrome matrix will look like:
+//
+//    b  a  b  a
+// b  T  F  T  F
+// a  -  T  F  T
+// b  -  -  T  F
+// a  -  -  -  T
+//
+// where T = true (is palindrome), F = false, - = unused
+// Reading the matrix shows palindromes: "b","a","b","a" (len 1)
+//                                      "bab" (len 3)
+// Therefore longest palindrome is "bab"
+//
 // Time Complexity: O(n²) where n is string length (nested loops)
 // Space Complexity: O(n²) for the 2D DP array
 
@@ -22,13 +35,21 @@ func main() {
 	start := time.Now()
 	result := longestPalindrome("baba")
 	elapsed := time.Since(start)
+	fmt.Printf("Longest palindrome: %v\n", result)
 	fmt.Printf("Time taken: %v\n", elapsed)
-	fmt.Printf("Palindrome: %v\n", result)
 }
 
 // longestPalindrome finds the longest palindromic substring in string s
 // Uses bottom-up dynamic programming with 2D boolean array
 // Returns the longest palindrome found
+// For input "baba", the isPalindrome matrix will look like:
+//
+//	b  a  b  a
+//
+// b  T  F  T  F
+// a  -  T  F  T
+// b  -  -  T  F
+// a  -  -  -  T
 func longestPalindrome(s string) string {
 	ans := ""
 	n := len(s)
