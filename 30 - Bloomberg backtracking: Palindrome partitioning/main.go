@@ -15,7 +15,7 @@ type palindrome struct {
 func main() {
 	w := palindrome{}
 	start := time.Now()
-	w.solution("aabedltegnuetdsasaab", []string{})
+	w.solution("babba", []string{})
 	fmt.Printf("Palindrome: %v\n", w.ans)
 	elapsed := time.Since(start)
 	fmt.Printf("Solution took %s\n", elapsed)
