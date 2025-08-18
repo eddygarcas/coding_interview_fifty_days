@@ -25,7 +25,7 @@ import (
 // Space Complexity: O(n) - for right max heights array
 
 func main() {
-	buildings := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
+	buildings := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1, 3}
 	start := time.Now()
 	result := trapWater(buildings)
 	fmt.Printf("Rain water trapped: %v\n", result)
