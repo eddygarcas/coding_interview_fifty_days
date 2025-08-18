@@ -5,37 +5,35 @@ import (
 	"time"
 )
 
+// position represents a point in 2D space with x and y coordinates
 type position struct {
 	x, y int
 }
 
 func main() {
-
 	start := time.Now()
 	robot := position{0, 0}
 	sequence := []byte{'U', 'R', 'L', 'D', 'U'}
-	/**
-	U = y++
-	D = y--
-	R = x++
-	L = x--
-	You can implement that just return true if the robot goes back to 0,0
-	also you can just use a switch to increment or decrement the values to achieve O(N) on
-	time complexity, and O(1) in space complexity.
-	Anyway here I've decides to use map as well as position struct to return the position as well as
-	use a common representation for 2D spaces
-	*/
+
+	// Calculate final robot position after sequence of moves
 	robot.finalPosition(sequence)
 	fmt.Printf("Final position: %v\n", robot)
 	elapsed := time.Since(start)
-	fmt.Printf("Execution time: %v\v", elapsed)
+	fmt.Printf("Execution time: %v\n", elapsed)
 }
 
+// finalPosition calculates the robot's final position after executing a sequence of moves
+// The moves are:
+// U = Move up (y++)
+// D = Move down (y--)
+// R = Move right (x++)
+// L = Move left (x--)
+// Time complexity: O(n) where n is length of sequence
+// Space complexity: O(1) as map stores max 4 directions
 func (p *position) finalPosition(seq []byte) {
-	//create a hashmap for every direction
 	pos := make(map[byte]int, 4)
 	for _, val := range seq {
-		pos[val] += 1
+		pos[val]++
 	}
 	p.x = pos['R'] - pos['L']
 	p.y = pos['U'] - pos['D']
