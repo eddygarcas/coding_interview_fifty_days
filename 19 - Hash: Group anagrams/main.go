@@ -1,5 +1,17 @@
 package main
 
+// This program solves the Group Anagrams problem using hash tables.
+// It takes a list of strings and groups them based on whether they are anagrams of each other.
+// Two strings are anagrams if they contain the same characters with the same frequencies.
+//
+// Example:
+// Input: ["eat","tea","tan","ate","nat","bat"]
+// Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+//
+// The program implements two different approaches:
+// 1. Character counting using a hash map (groupAnagrams)
+// 2. Sorting characters and using sorted string as key (groupAnagrams2)
+
 import (
 	"fmt"
 	"sort"
@@ -26,13 +38,12 @@ func main() {
 }
 
 // groupAnagrams groups a slice of strings into anagrams using character comparison.
-// Time Complexity: O(n^2 * k), where n is the number of strings and k is the average string length.
-// Space Complexity: O(nk) for the auxiliary map and result slices.
-// This implementation uses a nested loop and a helper function to compare character counts.
+// For each string, it compares with others to find anagrams by counting characters.
+//
+// Time Complexity: O(n^2 * k), where n is the number of strings and k is the average string length
+// Space Complexity: O(nk) for storing the auxiliary map and result slices
 func groupAnagrams(anagrams []string) [][]string {
-	// aux tracks which strings have been grouped
 	aux := make(map[string]int)
-	// result stores grouped anagrams
 	result := make([][]string, len(anagrams))
 	l := 0
 	for l < len(anagrams) {
@@ -50,11 +61,11 @@ func groupAnagrams(anagrams []string) [][]string {
 }
 
 // compareChars checks if two strings are anagrams by comparing their character counts.
-// Time Complexity: O(k), where k is the length of the strings.
-// Space Complexity: O(k) for the character count map.
-// Returns true if both strings contain the same characters with the same frequencies.
+// It uses a hash map to track character frequencies.
+//
+// Time Complexity: O(k), where k is the length of the strings
+// Space Complexity: O(1) since character set is fixed
 func compareChars(s, t string) bool {
-	// count stores the frequency of each character in string s
 	count := make(map[rune]int)
 	for _, ch := range s {
 		count[ch]++
@@ -65,7 +76,6 @@ func compareChars(s, t string) bool {
 		}
 		count[c]--
 	}
-	// Check if all character counts are zero
 	for _, v := range count {
 		if v != 0 {
 			return false
@@ -74,14 +84,12 @@ func compareChars(s, t string) bool {
 	return true
 }
 
-// groupAnagrams2 groups a slice of strings into anagrams by sorting their characters.
-// For each string of length k, sort.Slice() takes O(k log k) time, so for n strings:
-// Time Complexity: O(n * k log k), where n is the number of strings and k is the average string length.
-// Space Complexity: O(nk) for storing the map and result slices.
-// It uses a map where the key is the sorted string and the value is a list of anagrams.
-// Returns a slice of string slices, where each inner slice contains words that are anagrams of each other.
+// groupAnagrams2 groups anagrams by sorting each string's characters.
+// Uses sorted strings as keys in a hash map to group anagrams efficiently.
+//
+// Time Complexity: O(n * k log k), where n is number of strings, k is average string length
+// Space Complexity: O(nk) for storing the map and result slices
 func groupAnagrams2(anagrams []string) [][]string {
-	// resultMap stores the sorted strings as keys and their corresponding anagrams as values
 	resultMap := make(map[string][]string)
 	for _, anagram := range anagrams {
 		array := []byte(anagram)
@@ -94,7 +102,6 @@ func groupAnagrams2(anagrams []string) [][]string {
 		}
 		resultMap[sortedS] = append(resultMap[sortedS], anagram)
 	}
-	// Initialize result with the correct capacity
 	result := make([][]string, 0, len(resultMap))
 	for _, v := range resultMap {
 		result = append(result, v)

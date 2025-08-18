@@ -1,5 +1,11 @@
 package main
 
+// This program solves the Two Sum problem using a hash map approach.
+// Given an array of integers and a target sum, it finds two numbers that add up to the target.
+// The solution uses a single pass through the array, storing complements in a hash map.
+// Time Complexity: O(n) where n is length of input array
+// Space Complexity: O(n) for storing the hash map
+
 import "fmt"
 
 func main() {
@@ -10,7 +16,10 @@ func main() {
 }
 
 // twoSum finds two indices in nums whose values add up to target.
-// It returns a slice containing the indices of the two numbers.
+// It uses a hash map to store complements (target - current number) as we iterate.
+// For each number, we check if its complement exists in the map.
+// If found, we've found two numbers that sum to target.
+// Returns the indices of the two numbers that sum to target, or empty slice if not found.
 func twoSum(nums []int, target int) []int {
 	// Map to store the value needed to reach the target and its corresponding index
 	findMap := make(map[int]int, len(nums))

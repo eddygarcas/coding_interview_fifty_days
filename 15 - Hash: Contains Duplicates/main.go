@@ -1,5 +1,15 @@
 package main
 
+// This program checks if an array contains any duplicate values using a hash map.
+// It demonstrates a simple hash-based approach to track and identify duplicates:
+// 1. Create a map to store seen numbers
+// 2. Iterate through array once, checking if each number exists in map
+// 3. Return true immediately when a duplicate is found
+// 4. Otherwise mark number as seen and continue
+//
+// Time Complexity: O(n) - single pass through the array
+// Space Complexity: O(n) - hash map may store up to n elements
+
 import "fmt"
 
 func main() {
@@ -8,7 +18,6 @@ func main() {
 	// Call duplicates to check if the array contains any duplicate values
 	result := duplicates(nums)
 	fmt.Printf("Result: %v\n", result)
-
 }
 
 // duplicates checks if there are any duplicate values in the nums slice.
